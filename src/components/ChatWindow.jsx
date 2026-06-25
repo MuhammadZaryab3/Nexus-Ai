@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Bot, Sparkles, Code2, BookOpen, Lightbulb } from 'lucide-react'
+import { Bot, Sparkles, Code2, BookOpen, Lightbulb, Menu } from 'lucide-react'
 import MessageBubble from './MessageBubble'
 import TypingIndicator from './TypingIndicator'
 import InputBar from './InputBar'
@@ -11,7 +11,7 @@ const SUGGESTIONS = [
   { icon: Sparkles, label: 'Generate ideas', text: 'Give me 5 creative frontend project ideas to add to my portfolio.' },
 ]
 
-export default function ChatWindow({ messages, isLoading, error, onSend }) {
+export default function ChatWindow({ messages, isLoading, error, onSend, onOpenSidebar }) {
   const bottomRef = useRef(null)
 
   useEffect(() => {
@@ -22,17 +22,28 @@ export default function ChatWindow({ messages, isLoading, error, onSend }) {
 
   return (
     <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+
       {/* Header */}
-      <div className="px-4 md:px-6 py-4 border-b border-surface-700 flex items-center gap-3 pl-16 md:pl-6">
-        <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-        <h1 className="font-semibold text-white text-sm">NexusAI Chat</h1>
-        <span className="hidden sm:inline text-xs text-zinc-500 font-mono">powered by Muhammad Zaryab</span>
+      <div className="flex-shrink-0 h-14 border-b border-surface-700 flex items-center gap-3 px-4 md:px-6">
+        {/* Hamburger inside header — mobile only */}
+        <button
+          onClick={onOpenSidebar}
+          className="md:hidden p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-surface-700 transition-colors flex-shrink-0"
+        >
+          <Menu size={20} />
+        </button>
+
+        <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse flex-shrink-0" />
+        <h1 className="font-semibold text-white text-sm leading-none">NexusAI Chat</h1>
+        <span className="hidden sm:inline text-xs text-zinc-500 font-mono leading-none">
+          powered by Muhammad Zaryab
+        </span>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden px-3 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {isEmpty ? (
-          <div className="flex flex-col items-center justify-center h-full text-center gap-6 sm:gap-8 pb-8 px-4">
+          <div className="flex flex-col items-center justify-center min-h-full text-center gap-6 sm:gap-8 pb-4 px-4">
             <div>
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center mx-auto mb-4">
                 <Bot size={24} className="text-white" />
@@ -42,8 +53,6 @@ export default function ChatWindow({ messages, isLoading, error, onSend }) {
                 Ask me anything — code, ideas, explanations, or just have a conversation.
               </p>
             </div>
-
-            {/* Suggestion chips — 1 col on mobile, 2 on desktop */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-lg">
               {SUGGESTIONS.map(({ icon: Icon, label, text }) => (
                 <button
@@ -76,7 +85,10 @@ export default function ChatWindow({ messages, isLoading, error, onSend }) {
       </div>
 
       {/* Input */}
-      <InputBar onSend={onSend} isLoading={isLoading} />
+      <div className="flex-shrink-0">
+        <InputBar onSend={onSend} isLoading={isLoading} />
+      </div>
+
     </div>
   )
 }

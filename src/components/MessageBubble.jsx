@@ -14,7 +14,7 @@ export default function MessageBubble({ message }) {
 
   return (
     <div className={`flex items-end gap-2 sm:gap-3 animate-slide-up ${isUser ? 'flex-row-reverse' : ''}`}>
-      {/* Avatar — hidden on very small screens */}
+      {/* Avatar */}
       <div className={`hidden sm:flex w-8 h-8 rounded-full items-center justify-center flex-shrink-0 ${
         isUser
           ? 'bg-surface-600 border border-surface-500'
@@ -24,23 +24,25 @@ export default function MessageBubble({ message }) {
       </div>
 
       {/* Bubble */}
-      <div className={`group relative max-w-[85%] sm:max-w-[75%] ${isUser ? 'items-end' : 'items-start'} flex flex-col`}>
-        <div className={`px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl text-sm leading-relaxed ${
+      <div className={`group relative max-w-[88%] sm:max-w-[75%] min-w-0 ${isUser ? 'items-end' : 'items-start'} flex flex-col`}>
+        <div className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl text-sm leading-relaxed overflow-hidden ${
           isUser
             ? 'bg-brand-500 text-white rounded-br-sm'
             : 'bg-surface-700 text-zinc-100 rounded-bl-sm prose-chat'
         }`}>
           {isUser ? (
-            <p className="whitespace-pre-wrap">{message.content}</p>
+            <p className="whitespace-pre-wrap break-words">{message.content}</p>
           ) : (
-            <ReactMarkdown>{message.content}</ReactMarkdown>
+            <div className="overflow-x-auto">
+              <ReactMarkdown>{message.content}</ReactMarkdown>
+            </div>
           )}
         </div>
 
         {/* Copy button */}
         <button
           onClick={handleCopy}
-          className="absolute -top-7 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs text-zinc-400 hover:text-white bg-surface-700 px-2 py-1 rounded-md border border-surface-600 whitespace-nowrap"
+          className="absolute -top-7 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs text-zinc-400 hover:text-white bg-surface-700 px-2 py-1 rounded-md border border-surface-600 whitespace-nowrap z-10"
         >
           {copied ? <Check size={11} className="text-green-400" /> : <Copy size={11} />}
           {copied ? 'Copied' : 'Copy'}

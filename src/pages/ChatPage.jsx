@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import ChatWindow from '../components/ChatWindow'
 import { useChat } from '../hooks/useChat'
 
 export default function ChatPage() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
   const {
     sessions,
     activeSession,
@@ -25,6 +28,8 @@ export default function ChatPage() {
         onLoadSession={loadSession}
         onDeleteSession={deleteSession}
         onClearAll={clearAllHistory}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
 
       <ChatWindow
@@ -32,6 +37,7 @@ export default function ChatPage() {
         isLoading={isLoading}
         error={error}
         onSend={sendMessage}
+        onOpenSidebar={() => setSidebarOpen(true)}
       />
     </div>
   )

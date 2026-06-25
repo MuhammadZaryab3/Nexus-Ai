@@ -28,7 +28,7 @@ export default function InputBar({ onSend, isLoading }) {
   }
 
   return (
-    <div className="p-3 sm:p-4 border-t border-surface-700">
+    <div className="p-3 sm:p-4 border-t border-surface-700" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
       <div className="flex items-end gap-2 sm:gap-3 bg-surface-700 rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 border border-surface-600 focus-within:border-brand-500 transition-colors">
         <textarea
           ref={textareaRef}
@@ -38,7 +38,7 @@ export default function InputBar({ onSend, isLoading }) {
           placeholder="Ask anything…"
           rows={1}
           disabled={isLoading}
-          className="flex-1 bg-transparent text-sm text-zinc-100 placeholder-zinc-500 resize-none outline-none leading-relaxed max-h-40 font-sans disabled:opacity-50"
+          className="flex-1 bg-transparent text-sm text-zinc-100 placeholder-zinc-500 resize-none outline-none leading-relaxed max-h-40 font-sans disabled:opacity-50 min-w-0"
         />
         <button
           onClick={handleSend}

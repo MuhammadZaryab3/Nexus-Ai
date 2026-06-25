@@ -67,17 +67,31 @@
   .dot-3 { animation-delay: 0.4s; }
 }
 
-/* Light mode overrides */
-html.light {
-  --bg-primary: #f4f4f5;
-  --bg-secondary: #ffffff;
+/* Mobile safe area for input bar above bottom nav */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
-html.light body {
-  background-color: #f4f4f5;
-  color: #18181b;
+/* Fix code blocks — horizontal scroll only, no overflow */
+.prose-chat pre {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: pre !important;
+  word-break: normal !important;
+  max-width: 100% !important;
 }
 
+.prose-chat * {
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.prose-chat pre * {
+  word-break: normal;
+}
+/* 
 html.light .bg-surface-900 { background-color: #f4f4f5; }
 html.light .bg-surface-800 { background-color: #ffffff; }
 html.light .bg-surface-700 { background-color: #e4e4e7; }
@@ -93,4 +107,4 @@ html.light .hover\:bg-surface-700:hover { background-color: #e4e4e7; }
 html.light .hover\:bg-surface-600:hover { background-color: #d4d4d8; }
 html.light .text-white { color: #18181b; }
 html.light .text-zinc-200 { color: #27272a; }
-html.light .text-zinc-100 { color: #18181b; }
+html.light .text-zinc-100 { color: #18181b; } */
