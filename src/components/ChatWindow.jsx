@@ -21,31 +21,30 @@ export default function ChatWindow({ messages, isLoading, error, onSend }) {
   const isEmpty = messages.length === 0
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 h-full">
+    <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-surface-700 flex items-center gap-3">
+      <div className="px-4 md:px-6 py-4 border-b border-surface-700 flex items-center gap-3 pl-16 md:pl-6">
         <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
         <h1 className="font-semibold text-white text-sm">NexusAI Chat</h1>
-        <span className="text-xs text-zinc-500 font-mono">powered by Muhammad Zaryab</span>
+        <span className="hidden sm:inline text-xs text-zinc-500 font-mono">powered by Muhammad Zaryab</span>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+      <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {isEmpty ? (
-          // Welcome screen
-          <div className="flex flex-col items-center justify-center h-full text-center gap-8 pb-8">
+          <div className="flex flex-col items-center justify-center h-full text-center gap-6 sm:gap-8 pb-8 px-4">
             <div>
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center mx-auto mb-4">
-                <Bot size={28} className="text-white" />
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center mx-auto mb-4">
+                <Bot size={24} className="text-white" />
               </div>
-              <h2 className="text-2xl font-semibold text-white mb-2">How can I help?</h2>
+              <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">How can I help?</h2>
               <p className="text-zinc-400 text-sm max-w-xs">
                 Ask me anything — code, ideas, explanations, or just have a conversation.
               </p>
             </div>
 
-            {/* Suggestion chips */}
-            <div className="grid grid-cols-2 gap-3 w-full max-w-lg">
+            {/* Suggestion chips — 1 col on mobile, 2 on desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-lg">
               {SUGGESTIONS.map(({ icon: Icon, label, text }) => (
                 <button
                   key={label}
@@ -65,8 +64,8 @@ export default function ChatWindow({ messages, isLoading, error, onSend }) {
             ))}
             {isLoading && <TypingIndicator />}
             {error && (
-              <div className="flex justify-center">
-                <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-2 rounded-xl">
+              <div className="flex justify-center px-4">
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-2 rounded-xl text-center">
                   {error}
                 </div>
               </div>

@@ -1,25 +1,46 @@
-import { Bot, Plus, Sun, Moon, Trash2 } from 'lucide-react'
+import { useState } from 'react'
+import { Bot, Plus, Sun, Moon, Trash2, Menu, X } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
 export default function Sidebar({ sessions, activeSessionId, onNewChat, onLoadSession, onClearAll }) {
   const { isDark, toggleTheme } = useTheme()
+  const [isOpen, setIsOpen] = useState(false)
 
-  return (
-    <aside className="w-64 flex-shrink-0 bg-surface-800 border-r border-surface-700 flex flex-col h-full">
+  const handleNewChat = () => {
+    onNewChat()
+    setIsOpen(false)
+  }
+
+  const handleLoadSession = (id) => {
+    onLoadSession(id)
+    setIsOpen(false)
+  }
+
+  const SidebarContent = () => (
+    <>
       {/* Logo */}
       <div className="p-5 border-b border-surface-700">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center">
-            <Bot size={16} className="text-white" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center">
+              <Bot size={16} className="text-white" />
+            </div>
+            <span className="font-semibold text-white tracking-tight">NexusAI</span>
           </div>
-          <span className="font-semibold text-white tracking-tight">NexusAI</span>
+          {/* Close button mobile only */}
+          <button
+            onClick={() => setIsOpen(false)}
+            className="md:hidden p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-surface-700 transition-colors"
+          >
+            <X size={18} />
+          </button>
         </div>
       </div>
 
       {/* New Chat Button */}
       <div className="p-3">
         <button
-          onClick={onNewChat}
+          onClick={handleNewChat}
           className="w-full flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-medium text-sm transition-colors"
         >
           <Plus size={16} />
@@ -37,7 +58,7 @@ export default function Sidebar({ sessions, activeSessionId, onNewChat, onLoadSe
         {sessions.map(session => (
           <button
             key={session.id}
-            onClick={() => onLoadSession(session.id)}
+            onClick={() => handleLoadSession(session.id)}
             className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors group ${
               activeSessionId === session.id
                 ? 'bg-surface-600 text-white'
@@ -72,6 +93,38 @@ export default function Sidebar({ sessions, activeSessionId, onNewChat, onLoadSe
           </button>
         )}
       </div>
-    </aside>
+    </>
+  )
+
+  return (
+    <>
+      {/* Hamburger button mobile only */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-xl bg-surface-700 border border-surface-600 text-zinc-300 hover:text-white transition-colors"
+      >
+        <Menu size={20} />
+      </button>
+
+      {/* Backdrop mobile only */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/60 z-40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar drawer on mobile, static on desktop */}
+      <aside
+        className={`
+          fixed md:static inset-y-0 left-0 z-50
+          w-64 flex-shrink-0 bg-surface-800 border-r border-surface-700 flex flex-col h-full
+          transition-transform duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}
+      >
+        <SidebarContent />
+      </aside>
+    </>
   )
 }
