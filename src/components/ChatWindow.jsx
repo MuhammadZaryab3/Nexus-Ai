@@ -25,7 +25,7 @@ export default function ChatWindow({ messages, isLoading, error, onSend, onOpenS
 
       {/* Header */}
       <div className="flex-shrink-0 h-14 border-b border-surface-700 flex items-center gap-3 px-4 md:px-6">
-        {/* Hamburger inside header — mobile only */}
+        {/* Hamburger — always rendered on mobile, never hidden */}
         <button
           onClick={onOpenSidebar}
           className="md:hidden p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-surface-700 transition-colors flex-shrink-0"
@@ -43,7 +43,7 @@ export default function ChatWindow({ messages, isLoading, error, onSend, onOpenS
       {/* Messages */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden px-3 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {isEmpty ? (
-          <div className="flex flex-col items-center justify-center min-h-full text-center gap-6 sm:gap-8 pb-4 px-4">
+          <div className="flex flex-col items-center justify-center min-h-full text-center gap-6 sm:gap-8 px-4" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' }}>
             <div>
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center mx-auto mb-4">
                 <Bot size={24} className="text-white" />
@@ -84,7 +84,7 @@ export default function ChatWindow({ messages, isLoading, error, onSend, onOpenS
         <div ref={bottomRef} />
       </div>
 
-      {/* Input */}
+      {/* Input — always has safe area padding */}
       <div className="flex-shrink-0">
         <InputBar onSend={onSend} isLoading={isLoading} />
       </div>

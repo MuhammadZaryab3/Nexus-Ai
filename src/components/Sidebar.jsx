@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Bot, Plus, Sun, Moon, Trash2, X } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
@@ -17,7 +16,7 @@ export default function Sidebar({ sessions, activeSessionId, onNewChat, onLoadSe
 
   return (
     <>
-      {/* Backdrop mobile only */}
+      {/* Backdrop — only when open on mobile */}
       {isOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black/60 z-40"
@@ -25,7 +24,7 @@ export default function Sidebar({ sessions, activeSessionId, onNewChat, onLoadSe
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar — on mobile: slides in/out. On desktop: always visible */}
       <aside
         className={`
           fixed md:static inset-y-0 left-0 z-50
@@ -34,7 +33,7 @@ export default function Sidebar({ sessions, activeSessionId, onNewChat, onLoadSe
           ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}
       >
-        {/* Logo */}
+        {/* Logo row — same h-14 as chat header */}
         <div className="flex-shrink-0 h-14 px-5 border-b border-surface-700 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center">
@@ -42,6 +41,7 @@ export default function Sidebar({ sessions, activeSessionId, onNewChat, onLoadSe
             </div>
             <span className="font-semibold text-white tracking-tight">NexusAI</span>
           </div>
+          {/* X button — only visible on mobile when sidebar is open */}
           <button
             onClick={onClose}
             className="md:hidden p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-surface-700 transition-colors"
@@ -61,7 +61,7 @@ export default function Sidebar({ sessions, activeSessionId, onNewChat, onLoadSe
           </button>
         </div>
 
-        {/* Recent chats list */}
+        {/* Sessions list */}
         <div className="flex-1 overflow-y-auto px-3 pb-3 space-y-1">
           {sessions.length === 0 && (
             <p className="text-xs text-zinc-500 text-center mt-8 px-4">
