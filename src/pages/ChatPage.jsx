@@ -31,7 +31,6 @@ export default function ChatPage() {
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
-
       <ChatWindow
         messages={messages}
         isLoading={isLoading}

@@ -7,16 +7,18 @@
     box-sizing: border-box;
   }
 
+  html, body, #root {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
   body {
     @apply bg-surface-900 text-zinc-100 font-sans;
     margin: 0;
     padding: 0;
-    height: 100vh;
-    overflow: hidden;
   }
 
   #root {
-    height: 100vh;
     display: flex;
   }
 
@@ -36,9 +38,13 @@
 }
 
 @layer components {
-  /* Code block inside AI messages */
   .prose-chat pre {
-    @apply bg-surface-800 rounded-xl p-4 overflow-x-auto text-sm font-mono my-3 border border-surface-600;
+    @apply bg-surface-800 rounded-xl p-4 text-sm font-mono my-3 border border-surface-600;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: pre;
+    word-break: normal;
+    max-width: 100%;
   }
 
   .prose-chat code:not(pre code) {
@@ -61,50 +67,41 @@
     @apply text-white font-semibold;
   }
 
+  .prose-chat * {
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .prose-chat pre * {
+    word-break: normal;
+  }
+
   /* Bounce dot delays */
   .dot-1 { animation-delay: 0s; }
   .dot-2 { animation-delay: 0.2s; }
   .dot-3 { animation-delay: 0.4s; }
 }
 
-/* Mobile safe area for input bar above bottom nav */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-  .pb-safe {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+/* Light mode overrides */
+html.light body {
+  background-color: #f4f4f5;
+  color: #18181b;
 }
 
-/* Fix code blocks — horizontal scroll only, no overflow */
-.prose-chat pre {
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  white-space: pre !important;
-  word-break: normal !important;
-  max-width: 100% !important;
-}
-
-.prose-chat * {
-  max-width: 100%;
-  word-break: break-word;
-}
-
-.prose-chat pre * {
-  word-break: normal;
-}
-/* 
 html.light .bg-surface-900 { background-color: #f4f4f5; }
 html.light .bg-surface-800 { background-color: #ffffff; }
 html.light .bg-surface-700 { background-color: #e4e4e7; }
 html.light .bg-surface-600 { background-color: #d4d4d8; }
 html.light .border-surface-700 { border-color: #e4e4e7; }
 html.light .border-surface-600 { border-color: #d4d4d8; }
+html.light .text-white { color: #18181b; }
 html.light .text-zinc-100 { color: #18181b; }
+html.light .text-zinc-200 { color: #27272a; }
+html.light .text-zinc-300 { color: #3f3f46; }
 html.light .text-zinc-400 { color: #52525b; }
 html.light .text-zinc-500 { color: #71717a; }
 html.light .text-zinc-600 { color: #52525b; }
-html.light .text-zinc-300 { color: #3f3f46; }
 html.light .hover\:bg-surface-700:hover { background-color: #e4e4e7; }
 html.light .hover\:bg-surface-600:hover { background-color: #d4d4d8; }
-html.light .text-white { color: #18181b; }
-html.light .text-zinc-200 { color: #27272a; }
-html.light .text-zinc-100 { color: #18181b; } */
+html.light .prose-chat pre { background-color: #e4e4e7; border-color: #d4d4d8; }
+html.light .prose-chat code:not(pre code) { background-color: #e4e4e7; }
